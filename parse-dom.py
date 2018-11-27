@@ -49,8 +49,8 @@ with open("stocks.csv", "a") as csvfile:
 						#remove symbol from name
 						end = match.regs[0][0] #start index of regex match
 						name = name[0:(end - 1)] #accounting for space
-						colArr.append(name)
 						colArr.append(symbol)
+						colArr.append(name)
 
 				elif i == 2: #remove commas from volume col
 					if n != 0: #ignore the header row
