@@ -6,10 +6,15 @@ import os
 
 dom1 = parse(sys.argv[1])  # parse an XML file by name
 
-#third table is the values
+#find table with classname mdcTable
+tables = dom1.getElementsByTagName("table")
 
-#need to change to get my classname..
-table = dom1.getElementsByTagName("table")[2]
+table = dom1.createElement("foo")
+for t in tables:
+	if 'class' in t.attributes:
+		if t.attributes['class'].nodeValue == 'mdcTable':
+			table = t
+			break
 
 #get col labels
 labelRow = table.firstChild
@@ -28,10 +33,8 @@ with open("stocks.csv", "a") as csvfile:
 		#add exchange name to each row
 		colArr.append('Nasdaq')
 		for i, col in enumerate(row.childNodes, start=0):
-			if i == 0: #skip rank col
-				continue
 
-			if i != 0 or i!=6: #ignore first and last col
+			if i != 0 and i!=5: #ignore first and last col
 
 				if i == 1: #name col behaves different
 					if n!= 0:
