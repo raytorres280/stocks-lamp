@@ -1,23 +1,22 @@
-current_time="`date +%Y-%m-%d-%H-%M-%S.html`"
-echo "$current_time"
-
-curl "http://wsj.com/mdc/public/page/2_3021-activnnm-actives.html" -o $current_time
 
 
 
-soup_dom=`java -jar tagsoup-1.2.1.jar --files $current_time`
+#do 60 times, with 60 second wait at start of loop.
 
-python3 parse-dom.py
+counter=0
+while [ $counter -lt 60 ]
+do
+echo $counter
 
+sleep 60
 
-# echo "$soup_dom"
-echo hello
-echo soup_dom
-echo world
-# echo $soup_dom
-#for i in 60 (hour)
-#get data,
-#add to csv
-#wait 60 seconds
+current_time=`date +%Y-%m-%d-%H-%M-%S`
 
+curl "http://wsj.com/mdc/public/page/2_3021-activnnm-actives.html" -o ${current_time}.html
 
+soup_dom=`java -jar tagsoup-1.2.1.jar --files $current_time.html`
+
+python3 parse-dom.py ${current_time}.xhtml
+
+((counter++))
+done
