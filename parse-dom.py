@@ -16,6 +16,20 @@ for t in tables:
 			table = t
 			break
 
+
+#get exchange name
+spans = dom1.getElementsByTagName("span")
+
+exchangeName = ''
+for sp in spans:
+	if 'class' in sp.attributes:
+		if sp.attributes['class'].nodeValue == 'mdcTblName':
+			pattern = re.compile(r"\w*\s")
+			match = pattern.search(sp.firstChild.data)
+			exchangeName = match.group(0)[:-1]
+			break
+
+
 #get col labels
 labelRow = table.firstChild
 labels = ["exchange", "symbol", "company", "volume", "price", "change"]
@@ -31,7 +45,7 @@ with open("stocks.csv", "a") as csvfile:
 		if n == 0: #skip header row
 			continue
 		#add exchange name to each row
-		colArr.append('Nasdaq')
+		colArr.append(exchangeName)
 		for i, col in enumerate(row.childNodes, start=0):
 
 			if i != 0 and i!=5: #ignore first and last col
