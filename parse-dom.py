@@ -13,7 +13,7 @@ labelRow = table.childNodes[0]
 labels = []
 
 #no header for row/rank number
-labels.append("rank")
+labels.append("Rank")
 #loop thru first row to get col headers
 for label in labelRow.childNodes:
 	labels.append(label)
@@ -23,7 +23,7 @@ table.childNodes[0].childNodes[0].childNodes[0].data = "rank"
 with open("stocks.csv", "w") as csvfile:
 	writer2 = csv.DictWriter(csvfile, fieldnames=labels)
 	rowObj = {}
-	writer = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+	writer = csv.writer(csvfile, delimiter=',')
 	colArr = []
 	for n, row in enumerate(table.childNodes):
 		for i, col in enumerate(row.childNodes, start=0):
